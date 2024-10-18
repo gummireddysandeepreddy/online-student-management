@@ -9,6 +9,7 @@ await db.execute(`CREATE TABLE IF NOT EXISTS student (
     id TEXT NOT NULL PRIMARY KEY,
     username TEXT NOT NULL UNIQUE,
     password_hash TEXT NOT NULL,
+    salt TEXT NOT NULL,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
     program TEXT NOT NULL,
@@ -25,6 +26,8 @@ await db.execute(`CREATE TABLE IF NOT EXISTS dept (
 await db.execute(`CREATE TABLE IF NOT EXISTS teacher (
     id TEXT NOT NULL PRIMARY KEY,
     username TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    salt TEXT NOT NULL,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
     dept TEXT NOT NULL,
@@ -65,7 +68,7 @@ await db.execute(`CREATE TABLE IF NOT EXISTS session (
     id TEXT NOT NULL PRIMARY KEY,
     expires_at INTEGER NOT NULL,
     user_id TEXT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(id)
+    FOREIGN KEY (user_id) REFERENCES student(id)
 )`);
 
 export interface DatabaseUser {

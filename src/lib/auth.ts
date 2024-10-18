@@ -9,7 +9,7 @@ import type { DatabaseUser } from "./db";
 
 
 const adapter = new LibSQLAdapter(db, {
-	user: "user",
+	user: "student",
 	session: "session"
 });
 

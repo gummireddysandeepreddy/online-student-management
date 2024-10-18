@@ -1,5 +1,4 @@
-import Link from "next/link";
-import CreateUser from "@/app/admin/create-user";
+// import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Form } from "@/lib/form";
 import type { ActionResult } from "@/lib/form";
@@ -26,7 +25,6 @@ export default async function Page() {
 				<TabsTrigger value="password">Users</TabsTrigger>
 			</TabsList>
 			<TabsContent value="account">
-				<CreateUser></CreateUser>
 			</TabsContent>
 			<TabsContent value="password">Change your password here.</TabsContent>
 			</Tabs>
