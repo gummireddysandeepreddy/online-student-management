@@ -4,7 +4,6 @@ import { lucia, validateRequest } from "@/lib/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { ActionResult } from "@/lib/form";
-import { db } from "@/lib/db";
 
 
 export default async function Page() {

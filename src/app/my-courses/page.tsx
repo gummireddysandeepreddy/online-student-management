@@ -54,11 +54,11 @@ export default async function MyCoursesPage() {
           </Link>
         </div>
         {selectedCourses.rows.length === 0 ? (
-          <p className="text-gray-500 text-lg">You haven't selected any courses yet.</p>
+          <p className="text-gray-500 text-lg">You haven&apos;t selected any courses yet.</p>
         ) : (
           <div className="bg-white shadow overflow-hidden sm:rounded-md">
             <ul className="divide-y divide-gray-200">
-              {selectedCourses.rows.map((course: CourseSelection | any) => (
+              {(selectedCourses.rows as unknown as CourseSelection[]).map((course: CourseSelection) => (
                 <li key={course.selection_id}>
                   <div className="px-4 py-4 sm:px-6">
                     <div className="flex items-center justify-between">

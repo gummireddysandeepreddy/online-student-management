@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 import { Form } from "@/lib/form";
@@ -133,7 +132,7 @@ export default async function Page() {
   );
 }
 
-async function signup(_: any, formData: FormData): Promise<ActionResult> {
+async function signup(_: unknown, formData: FormData): Promise<ActionResult> {
   "use server";
 
   const userId = generateId(15);

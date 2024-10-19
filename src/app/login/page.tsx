@@ -58,7 +58,7 @@ export default async function Page() {
   )
 }
 
-async function login(_: any, formData: FormData): Promise<ActionResult> {
+async function login(_: unknown, formData: FormData): Promise<ActionResult> {
   "use server";
   const regd_no = formData.get("regd_no");
   if (

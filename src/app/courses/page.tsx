@@ -37,7 +37,7 @@ export default async function CoursesPage() {
         </div>
         <div className="bg-white shadow overflow-hidden sm:rounded-md">
           <ul className="divide-y divide-gray-200">
-            {courses.rows.map((course: Course | any) => (
+            {(courses.rows as unknown as Course[]).map((course: Course) => (
               <li key={course.id}>
                 <div className="px-4 py-4 sm:px-6">
                   <div className="flex items-center justify-between">

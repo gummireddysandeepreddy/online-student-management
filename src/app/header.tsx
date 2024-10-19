@@ -1,11 +1,10 @@
 'use client'
 
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 export default function Header() {
   const pathname = usePathname();
-  const router = useRouter();
 
   const navItems = [
     { href: '/', label: 'Home' },

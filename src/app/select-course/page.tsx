@@ -1,7 +1,5 @@
-import Link from "next/link";
 import { db } from "@/lib/db";
-import { cookies } from "next/headers";
-import { lucia, validateRequest } from "@/lib/auth";
+import { validateRequest } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Form } from "@/lib/form";
 import { generateId } from "lucia";

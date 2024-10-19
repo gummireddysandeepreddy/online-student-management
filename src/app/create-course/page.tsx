@@ -122,7 +122,7 @@ export default async function Page() {
   );
 }
 
-async function createCourse(_: any, formData: FormData): Promise<ActionResult> {
+async function createCourse(_: unknown, formData: FormData): Promise<ActionResult> {
   "use server";
   const course_name = formData.get("course_name");
   const course_code = formData.get("course_code");
