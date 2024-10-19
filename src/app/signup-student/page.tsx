@@ -26,13 +26,13 @@ export default async function Page() {
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <Form action={signup}>
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-                Username
+              <label htmlFor="regd_no" className="block text-sm font-medium text-gray-700">
+                Registration Number
               </label>
               <div className="mt-1">
                 <input
-                  id="username"
-                  name="username"
+                  id="regd_no"
+                  name="regd_no"
                   type="text"
                   required
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -56,13 +56,13 @@ export default async function Page() {
             </div>
 
             <div>
-              <label htmlFor="first_name" className="block text-sm font-medium text-gray-700">
-                First Name
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                Name
               </label>
               <div className="mt-1">
                 <input
-                  id="first_name"
-                  name="first_name"
+                  id="name"
+                  name="name"
                   type="text"
                   required
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -71,13 +71,13 @@ export default async function Page() {
             </div>
 
             <div>
-              <label htmlFor="last_name" className="block text-sm font-medium text-gray-700">
-                Last Name
+              <label htmlFor="gpa" className="block text-sm font-medium text-gray-700">
+                GPA
               </label>
               <div className="mt-1">
                 <input
-                  id="last_name"
-                  name="last_name"
+                  id="gpa"
+                  name="gpa"
                   type="text"
                   required
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -116,17 +116,41 @@ export default async function Page() {
                   required
                   className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 >
-                  <option value="1">CSE</option>
-                  <option value="2">ECE</option>
-                  <option value="3">ME</option>
-                  <option value="4">CE</option>
-                  <option value="5">CS</option>
-                  <option value="6">AIML</option>
-                  <option value="7">DS</option>
-                  <option value="8">BS</option>
-                  <option value="9">EEE</option>
+                  <option value="">Select Department</option>
+                  <option value="CSE">CSE</option>
+                  <option value="ECE">ECE</option>
+                  <option value="ME">ME</option>
+                  <option value="CE">CE</option>
+                  <option value="CS">CS</option>
+                  <option value="AIML">AIML</option>
+                  <option value="DS">DS</option>
+                  <option value="BS">BS</option>
+                  <option value="EEE">EEE</option>
                 </select>
               </div>
+            </div>
+
+            <div>
+              <label htmlFor="semester" className="block text-sm font-medium text-gray-700">
+                Semester
+              </label>
+                <div className="mt-1">
+                <select
+                  id="semester"
+                  name="semester"
+                  required
+                  className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                >
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                </select>
+                </div>
             </div>
 
             <div>
@@ -168,15 +192,15 @@ export default async function Page() {
 
 async function signup(_: any, formData: FormData): Promise<ActionResult> {
   "use server";
-  const username = formData.get("username");
+  const regd_no = formData.get("regd_no");
   if (
-    typeof username !== "string" ||
-    username.length < 3 ||
-    username.length > 31 ||
-    !/^[a-z0-9_-]+$/.test(username)
+    typeof regd_no !== "string" ||
+    regd_no.length < 3 ||
+    regd_no.length > 31 ||
+    !/^[A-Z0-9_-]+$/.test(regd_no)
   ) {
     return {
-      error: "Invalid username. It must be 3-31 characters long and contain only lowercase letters, numbers, hyphens, and underscores."
+      error: "Invalid Registration Number. It must be 3-31 characters long and contain only lowercase letters, numbers, hyphens, and underscores."
     };
   }
   const password = formData.get("password");
@@ -190,14 +214,16 @@ async function signup(_: any, formData: FormData): Promise<ActionResult> {
   const passwordHash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
 
   const userId = generateId(15);
-  const firstName = formData.get("first_name");
-  const lastName = formData.get("last_name");
+  const name = formData.get("name");
+  const gpa = formData.get("gpa");
+  const semester = formData.get("semester");
   const program = formData.get("program");
   const dept = formData.get("dept");
 
   if (
-    typeof firstName !== "string" ||
-    typeof lastName !== "string" ||
+    typeof name !== "string" ||
+    typeof gpa !== "string" ||
+    typeof semester !== "string" ||
     typeof program !== "string" ||
     typeof dept !== "string"
   ) {
@@ -208,8 +234,8 @@ async function signup(_: any, formData: FormData): Promise<ActionResult> {
 
   try {
     await db.execute({
-      sql: "INSERT INTO student (id, username, password_hash, salt, first_name, last_name, program, dept) VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
-      args: [userId, username, passwordHash, salt, firstName, lastName, program, dept],
+      sql: "INSERT INTO student (id, regd_no, password_hash, salt, name, gpa, semester, program, dept) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      args: [userId, regd_no, passwordHash, salt, name, gpa, semester, program, dept],
     });
 
     const session = await lucia.createSession(userId, {});
@@ -217,9 +243,9 @@ async function signup(_: any, formData: FormData): Promise<ActionResult> {
     cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
   } catch (e) {
     console.error(e);
-    if (e instanceof Error && e.message.includes("UNIQUE constraint failed: user.username")) {
+    if (e instanceof Error && e.message.includes("UNIQUE constraint failed: student.regd_no")) {
       return {
-        error: "Username already used"
+        error: "Registration Number already used"
       };
     }
     return {

@@ -7,31 +7,24 @@ export const db = createClient({
 
 await db.execute(`CREATE TABLE IF NOT EXISTS student (
     id TEXT NOT NULL PRIMARY KEY,
-    username TEXT NOT NULL UNIQUE,
+    regd_no TEXT NOT NULL UNIQUE,
     password_hash TEXT NOT NULL,
     salt TEXT NOT NULL,
-    first_name TEXT NOT NULL,
-    last_name TEXT NOT NULL,
+    name TEXT NOT NULL,
+    gpa TEXT NOT NULL,
+    semester TEXT NOT NULL,
     program TEXT NOT NULL,
-    dept TEXT NOT NULL,
-    FOREIGN KEY (dept) REFERENCES dept(id)
-)`);
-
-await db.execute(`CREATE TABLE IF NOT EXISTS dept (
-    id TEXT NOT NULL PRIMARY KEY,
-    name TEXT NOT NULL UNIQUE
+    dept TEXT NOT NULL
 )`);
 
 
 await db.execute(`CREATE TABLE IF NOT EXISTS teacher (
     id TEXT NOT NULL PRIMARY KEY,
-    username TEXT NOT NULL UNIQUE,
-    password_hash TEXT NOT NULL,
-    salt TEXT NOT NULL,
-    first_name TEXT NOT NULL,
-    last_name TEXT NOT NULL,
+    name TEXT NOT NULL,
+    mail TEXT NOT NULL,
+    phone TEXT NOT NULL,
     dept TEXT NOT NULL,
-    FOREIGN KEY (dept) REFERENCES dept(id)
+    Designation TEXT NOT NULL
 )`);
 
 await db.execute(`CREATE TABLE IF NOT EXISTS course (
@@ -73,6 +66,6 @@ await db.execute(`CREATE TABLE IF NOT EXISTS session (
 
 export interface DatabaseUser {
 	id: string;
-	username: string;
+	regd_no: string;
 	password_hash: string;
 }

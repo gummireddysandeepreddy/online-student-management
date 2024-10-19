@@ -6,6 +6,8 @@ import { cache } from "react";
 
 import type { Session, User } from "lucia";
 import type { DatabaseUser } from "./db";
+import { ActionResult } from "@/lib/form";
+import { redirect } from "next/navigation";
 
 
 const adapter = new LibSQLAdapter(db, {
@@ -21,7 +23,7 @@ export const lucia = new Lucia(adapter, {
 	},
 	getUserAttributes: (attributes) => {
 		return {
-			username: attributes.username
+			regd_no: attributes.regd_no
 		};
 	}
 });

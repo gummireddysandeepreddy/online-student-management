@@ -22,7 +22,7 @@ import Link from "next/link";
 
 export default async function Page() {
   const { user } = await validateRequest();
-  if (user?.username == "admin") {
+  if (user?.regd_no == "admin") {
     return redirect("/admin");
   }
   if (user) {
@@ -40,8 +40,8 @@ export default async function Page() {
         <CardContent className="grid gap-4">
           <Form action={login}>
             <div className="grid gap-2">
-              <Label htmlFor="username">User Name</Label>
-              <Input id="username" type="text" name="username" required />
+              <Label htmlFor="regd_no">Registration Number</Label>
+              <Input id="regd_no" type="text" name="regd_no" required />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="password">Password</Label>
@@ -60,14 +60,14 @@ export default async function Page() {
 
 async function login(_: any, formData: FormData): Promise<ActionResult> {
   "use server";
-  const username = formData.get("username");
+  const regd_no = formData.get("regd_no");
   if (
-    typeof username !== "string" ||
-    username.length < 3 ||
-    username.length > 31
+    typeof regd_no !== "string" ||
+    regd_no.length < 3 ||
+    regd_no.length > 31
   ) {
     return {
-      error: "Invalid username"
+      error: "Invalid Registration Number"
     };
   }
   const password = formData.get("password");
@@ -78,13 +78,13 @@ async function login(_: any, formData: FormData): Promise<ActionResult> {
   }
 
   const existingUsers = await db.execute({
-    sql: `SELECT * FROM student WHERE username = ?`,
-    args: [username],
+    sql: `SELECT * FROM student WHERE regd_no = ?`,
+    args: [regd_no],
   });
 
   if (!existingUsers || existingUsers.rows.length === 0) {
     return {
-      error: "Incorrect username or password"
+      error: "Incorrect Registration Number or password"
     };
   }
   const existingUser = existingUsers.rows[0];
@@ -94,17 +94,8 @@ async function login(_: any, formData: FormData): Promise<ActionResult> {
   const hashedPassword = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
   
   if (storedHash !== hashedPassword) {
-    // NOTE:
-    // Returning immediately allows malicious actors to figure out valid usernames from response times,
-    // allowing them to only focus on guessing passwords in brute-force attacks.
-    // As a preventive measure, you may want to hash passwords even for invalid usernames.
-    // However, valid usernames can be already be revealed with the signup page among other methods.
-    // It will also be much more resource intensive.
-    // Since protecting against this is non-trivial,
-    // it is crucial your implementation is protected against brute-force attacks with login throttling, 2FA, etc.
-    // If usernames are public, you can outright tell the user that the username is invalid.
     return {
-      error: "Incorrect username or password"
+      error: "Incorrect Registration Number or password"
     };
   }
   const id: string = existingUser.id as string;

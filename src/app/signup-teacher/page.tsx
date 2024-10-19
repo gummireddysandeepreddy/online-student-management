@@ -1,24 +1,17 @@
 import Link from "next/link";
 import { db } from "@/lib/db";
-import { cookies } from "next/headers";
-import { lucia, validateRequest } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Form } from "@/lib/form";
 import { generateId } from "lucia";
-import crypto from 'crypto';
 
 import type { ActionResult } from "@/lib/form";
 
 export default async function Page() {
-  const { user } = await validateRequest();
-  if (user) {
-    return redirect("/");
-  }
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Create an account
+          Sign up as Teacher
         </h2>
       </div>
 
@@ -26,13 +19,13 @@ export default async function Page() {
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <Form action={signup}>
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-                Username
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                Name
               </label>
               <div className="mt-1">
                 <input
-                  id="username"
-                  name="username"
+                  id="name"
+                  name="name"
                   type="text"
                   required
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -41,14 +34,14 @@ export default async function Page() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Password
+              <label htmlFor="mail" className="block text-sm font-medium text-gray-700">
+                Email
               </label>
               <div className="mt-1">
                 <input
-                  id="password"
-                  name="password"
-                  type="password"
+                  id="mail"
+                  name="mail"
+                  type="email"
                   required
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
@@ -56,28 +49,13 @@ export default async function Page() {
             </div>
 
             <div>
-              <label htmlFor="first_name" className="block text-sm font-medium text-gray-700">
-                First Name
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+                Phone
               </label>
               <div className="mt-1">
                 <input
-                  id="first_name"
-                  name="first_name"
-                  type="text"
-                  required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="last_name" className="block text-sm font-medium text-gray-700">
-                Last Name
-              </label>
-              <div className="mt-1">
-                <input
-                  id="last_name"
-                  name="last_name"
+                  id="phone"
+                  name="phone"
                   type="text"
                   required
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -96,6 +74,7 @@ export default async function Page() {
                   required
                   className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 >
+                  <option value="">Select Department</option>
                   <option value="CSE">CSE</option>
                   <option value="ECE">ECE</option>
                   <option value="ME">ME</option>
@@ -107,6 +86,27 @@ export default async function Page() {
                   <option value="EEE">EEE</option>
                 </select>
               </div>
+            </div>
+
+            <div>
+              <label htmlFor="designation" className="block text-sm font-medium text-gray-700">
+                Designation
+              </label>
+                <div className="mt-1">
+                <select
+                  id="designation"
+                  name="designation"
+                  required
+                  className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                >
+                  <option value="">Select Designation</option>
+                  <option value="Professor">Professor</option>
+                  <option value="Associate Professor">Associate Professor</option>
+                  <option value="Assistant Professor">Assistant Professor</option>
+                  <option value="Lecturer">Lecturer</option>
+                  <option value="Instructor">Instructor</option>
+                </select>
+                </div>
             </div>
 
             <div>
@@ -148,36 +148,20 @@ export default async function Page() {
 
 async function signup(_: any, formData: FormData): Promise<ActionResult> {
   "use server";
-  const username = formData.get("username");
-  if (
-    typeof username !== "string" ||
-    username.length < 3 ||
-    username.length > 31 ||
-    !/^[a-z0-9_-]+$/.test(username)
-  ) {
-    return {
-      error: "Invalid username. It must be 3-31 characters long and contain only lowercase letters, numbers, hyphens, and underscores."
-    };
-  }
-  const password = formData.get("password");
-  if (typeof password !== "string" || password.length < 6 || password.length > 255) {
-    return {
-      error: "Invalid password. It must be 6-255 characters long."
-    };
-  }
-
-  const salt = crypto.randomBytes(16).toString('hex');
-  const passwordHash = crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
 
   const userId = generateId(15);
-  const firstName = formData.get("first_name");
-  const lastName = formData.get("last_name");
+  const name = formData.get("name");
+  const mail = formData.get("mail");
+  const phone = formData.get("phone");
   const dept = formData.get("dept");
+  const designation = formData.get("designation");
 
   if (
-    typeof firstName !== "string" ||
-    typeof lastName !== "string" ||
-    typeof dept !== "string"
+    typeof name !== "string" ||
+    typeof mail !== "string" ||
+    typeof phone !== "string" ||
+    typeof dept !== "string" ||
+    typeof designation !== "string"
   ) {
     return {
       error: "Invalid form data"
@@ -186,23 +170,15 @@ async function signup(_: any, formData: FormData): Promise<ActionResult> {
 
   try {
     await db.execute({
-      sql: "INSERT INTO teacher (id, username, password_hash, salt, first_name, last_name, dept) VALUES(?, ?, ?, ?, ?, ?, ?)",
-      args: [userId, username, passwordHash, salt, firstName, lastName, dept],
+      sql: "INSERT INTO teacher (id, name, mail, phone, dept, designation) VALUES(?, ?, ?, ?, ?, ?)",
+      args: [userId, name, mail, phone, dept, designation],
     });
-
-    const session = await lucia.createSession(userId, {});
-    const sessionCookie = lucia.createSessionCookie(session.id);
-    cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
   } catch (e) {
     console.error(e);
-    if (e instanceof Error && e.message.includes("UNIQUE constraint failed: user.username")) {
-      return {
-        error: "Username already used"
-      };
-    }
     return {
       error: "An unknown error occurred"
     };
   }
-  return redirect("/");
+  console.log("Details saved successfully");
+  return redirect("/signup-teacher");
 }
