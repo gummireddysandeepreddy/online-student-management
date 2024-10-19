@@ -16,8 +16,10 @@ This project is an Online Student Management System designed to help educational
 
 - HTML5
 - CSS3
-- JavaScript
-- Bootstrap (for responsive design)
+- TypeScript (tsx)
+- Tailwind CSS (for responsive design)
+- Lucia Authentication
+- Turso Database
 
 ## System Architecture
 
