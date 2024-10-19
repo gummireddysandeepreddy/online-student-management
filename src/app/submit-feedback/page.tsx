@@ -39,7 +39,7 @@ export default async function Page() {
                   required
                   className="block w-full text-gray-700 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 >
-                  <option value="">Select a teacher</option>'
+                  <option value="">Select a teacher</option>
                   {teachers.rows.map((teacher: any) => (
                     <option key={teacher.id} value={teacher.id}>
                       {teacher.name}
