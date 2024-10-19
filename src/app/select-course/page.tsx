@@ -154,5 +154,5 @@ async function selectCourse(_: any, formData: FormData): Promise<ActionResult> {
     return redirect("/my-courses");
   }
 
-  return redirect("/select-course");
+  return redirect("/my-course");
 }
