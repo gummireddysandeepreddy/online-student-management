@@ -19,6 +19,11 @@ export default async function Page() {
 	// console.log(usr);
 	return (
 		<div className="h-full">
+			<div className="absolute right-0 top-15">
+				<Form action={logout}>
+					<Button className="w-full">Sign out</Button>
+				</Form>
+			</div>
 			<div className="flex justify-center items-center h-full">
 				{user?.regd_no}
 			</div>

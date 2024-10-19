@@ -17,7 +17,7 @@ export default function Header() {
     { href: '/login', label: 'Login' },
     { href: '/signup-student', label: 'Student Signup' },
     { href: '/signup-teacher', label: 'Teacher Signup' },
-    { href: '/logout', label: 'Logout' },
+    // { href: '/logout', label: 'Logout' },
   ];
 
   return (
