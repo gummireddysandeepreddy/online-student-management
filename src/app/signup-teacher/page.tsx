@@ -124,21 +124,8 @@ export default async function Page() {
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-300" />
               </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">
-                  Already have an account?
-                </span>
-              </div>
             </div>
 
-            <div className="mt-6">
-              <Link
-                href="/login"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-indigo-600 bg-white hover:bg-gray-50"
-              >
-                Sign in
-              </Link>
-            </div>
           </div>
         </div>
       </div>
@@ -180,5 +167,5 @@ async function signup(_: any, formData: FormData): Promise<ActionResult> {
     };
   }
   console.log("Details saved successfully");
-  return redirect("/signup-teacher");
+  return redirect("/login");
 }
