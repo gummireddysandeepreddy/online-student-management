@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Online Student Management System
 
-## Getting Started
+This project is an Online Student Management System designed to help educational institutions manage student information, courses, and related data efficiently.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- User Authentication (Login system)
+- Dashboard for overview
+- Student Information Management
+- Course Management
+- Attendance Tracking
+- Grade Management
+- Responsive design for various devices
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologies Used
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- HTML5
+- CSS3
+- JavaScript
+- Bootstrap (for responsive design)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## System Architecture
 
-## Learn More
+The system is designed with the following entity relationships:
 
-To learn more about Next.js, take a look at the following resources:
+![System Architecture](https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%20(598)-CUY468PEP1rDxnMzas0CYB1ENtVC5a.png)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This diagram illustrates the database schema and relationships between different entities in the system:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Student: Stores student information
+- Teacher: Contains teacher details
+- Feedback: Manages feedback given by students to teachers
+- Course_selection: Handles course selections by students
+- Course: Stores course information
+- Session: Manages user sessions for authentication
 
-## Deploy on Vercel
+## Project Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+online-student-management/
+│
+├── css/
+│   ├── style.css
+│   └── ...
+│
+├── js/
+│   ├── script.js
+│   └── ...
+│
+├── index.html
+├── dashboard.html
+├── students.html
+├── courses.html
+├── attendance.html
+├── grades.html
+└── README.md
+
+
+## Setup and Installation
+
+1. Clone the repository:
+   
+   git clone https://github.com/gummireddysandeepreddy/online-student-management.git
+   
+
+2. Navigate to the project directory:
+   
+   cd online-student-management
+   
+
+3. Open the index.html file in your web browser to start using the application.
+
+## Usage
+
+1. Log in using your credentials on the login page.
+2. Navigate through different sections using the sidebar menu.
+3. Manage student information, courses, attendance, and grades as needed.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## Contact
+
+For any queries or suggestions, please contact:
+Gummireddy Sandeep Reddy - [GitHub Profile](https://github.com/gummireddysandeepreddy)
