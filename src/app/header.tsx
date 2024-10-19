@@ -12,6 +12,7 @@ export default function Header() {
     { href: '/create-course', label: 'Create Course' },
     { href: '/courses', label: 'Courses' },
     { href: '/select-course', label: 'Select Course' },
+    { href: '/my-courses', label: 'My Courses' },
     { href: '/submit-feedback', label: 'Submit Feedback' },
     { href: '/login', label: 'Login' },
     { href: '/signup-student', label: 'Student Signup' },

@@ -39,8 +39,9 @@ export default async function Page() {
                   id="teacher_id"
                   name="teacher_id"
                   required
-                  className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="block w-full text-gray-700 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 >
+                  <option value="">Select a teacher</option>'
                   {teachers.rows.map((teacher: any) => (
                     <option key={teacher.id} value={teacher.id}>
                       {teacher.name}
@@ -59,8 +60,9 @@ export default async function Page() {
                   id="rating"
                   name="rating"
                   required
-                  className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="block w-full text-gray-700 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 >
+                  <option value="">Select a rating</option>
                   {[1, 2, 3, 4, 5].map((rating) => 
                     <option key={rating} value={rating}>{rating}</option>
                   )}
@@ -78,7 +80,7 @@ export default async function Page() {
                   name="comments"
                   rows={4}
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="appearance-none block w-full text-gray-700 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
             </div>

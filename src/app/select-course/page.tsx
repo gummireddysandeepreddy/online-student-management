@@ -14,6 +14,16 @@ export default async function Page() {
     return redirect("/login");
   }
 
+  // Check if the student has already selected 4 courses
+  const selectedCoursesCount = await db.execute({
+    sql: "SELECT COUNT(*) as count FROM course_selection WHERE student_id = ?",
+    args: [user.id],
+  });
+
+  if (selectedCoursesCount.rows[0].count as number > 4) {
+    return redirect("/my-courses");
+  }
+
   const courses = await db.execute({
     sql: "SELECT * FROM course",
     args: [],
@@ -44,8 +54,9 @@ export default async function Page() {
                   id="course_id"
                   name="course_id"
                   required
-                  className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="block w-full px-3 text-gray-700 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 >
+                  <option value="">Select a course</option>
                   {courses.rows.map((course: any) => (
                     <option key={course.id} value={course.id}>
                       {course.course_name} ({course.course_code})
@@ -64,7 +75,7 @@ export default async function Page() {
                   id="teacher_id"
                   name="teacher_id"
                   required
-                  className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="block w-full px-3 py-2 border text-gray-700 border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 >
                   {teachers.rows.map((teacher: any) => (
                     <option key={teacher.id} value={teacher.id}>
@@ -99,6 +110,16 @@ async function selectCourse(_: any, formData: FormData): Promise<ActionResult> {
     };
   }
 
+  // Check if the student has already selected 4 courses
+  const selectedCoursesCount = await db.execute({
+    sql: "SELECT COUNT(*) as count FROM course_selection WHERE student_id = ?",
+    args: [user.id],
+  });
+
+  if (selectedCoursesCount.rows[0].count as number > 4) {
+    return redirect("/my-courses");
+  }
+
   const course_id = formData.get("course_id");
   const teacher_id = formData.get("teacher_id");
 
@@ -124,5 +145,16 @@ async function selectCourse(_: any, formData: FormData): Promise<ActionResult> {
       error: "An error occurred while selecting the course"
     };
   }
-  return redirect("/my-courses");
+
+  // Check again after insertion if the student now has 4 courses
+  const updatedSelectedCoursesCount = await db.execute({
+    sql: "SELECT COUNT(*) as count FROM course_selection WHERE student_id = ?",
+    args: [user.id],
+  });
+
+  if (updatedSelectedCoursesCount.rows[0].count as number > 4) {
+    return redirect("/my-courses");
+  }
+
+  return redirect("/select-course");
 }
