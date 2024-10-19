@@ -56,6 +56,13 @@ online-student-management/
 └── README.md
 
 
+## About Project in short
+
+* The project was made within the span on 24hrs and it lacks in some of the features provided by the problem statement like hiding the unwanted links but it has provided with the authentication and session management to restrict the user to specific pages.
+
+* The project was created in such a way that anyone from university can register with their details and can select atmost 4 courses from the list.
+
+
 ## Setup and Installation
 
 1. Clone the repository:
@@ -68,7 +75,16 @@ online-student-management/
    cd online-student-management
    
 
-3. Open the index.html file in your web browser to start using the application.
+3. Install the dependencies:
+   pnpm i
+
+
+4. Build the Project:
+   pnpm build
+
+
+5. Run the Project:
+   pnpm dev
 
 ## Usage
 
